@@ -6,8 +6,6 @@ export interface GalleryItemProps {
   src: string;
 }
 
-const RESOLUTION = 500;
-
 const ImageWrapper = styled('div', {
   position: 'relative',
   height: '100%',
@@ -31,7 +29,6 @@ const Image = styled('img', {
 export const GalleryItem: React.FC<GalleryItemProps> = ({ src }) => {
   const [ prevImg, setPrevImg ] = useState<string>();
   const [ style, setOpacity ] = useReducer((_: any, galleryItemOpacity: number) => createVars({ galleryItemOpacity }), {});
-
 
   useEffect(() => {
     setOpacity(1);

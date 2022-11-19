@@ -37,6 +37,12 @@ const getAllImages = async (): Promise<string[]> => {
   }
 };
 
+const atomicToProxyURL = (atomicURL: string): string => {
+  const filename = atomicURL.replace('https://atomicdata.dev/download/files/', '');
+
+  return `api/images/${filename}`;
+};
+
 export const getGalleryItems = async (amount: number): Promise<string[]> => {
   const allImages = await getAllImages();
   const images: string[] = [];
@@ -48,5 +54,11 @@ export const getGalleryItems = async (amount: number): Promise<string[]> => {
     images.push(randomImage);
   }
 
-  return images;
+  return images.map(atomicToProxyURL);
+};
+
+export const filenameToAtomicURL = (filename: string): string => {
+  const url = new URL(`https://atomicdata.dev/download/files/${filename}`);
+
+  return url.href;
 };

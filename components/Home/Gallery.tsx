@@ -21,6 +21,10 @@ const fetchImage = async (items: string[]): Promise<string> => {
   const { paths }: { paths: string[]; } = await fetch('api/gallery/1').then((res) => res.json());
   const [ image ] = paths;
 
+  if (!image) {
+    throw new Error('Invalid image');
+  }
+
   return !items.includes(image)
     ? Promise.resolve(image)
     : fetchImage(items);
