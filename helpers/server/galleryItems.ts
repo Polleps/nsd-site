@@ -1,6 +1,9 @@
 import fs from 'fs';
+import path from 'path';
 
-const IMAGE_BASE_PATH = 'public/gallery';
+const IMAGE_BASE_PATH = process.env.NODE_ENV === 'development'
+  ? 'public/gallery'
+  : path.join(process.cwd(), 'gallery');
 
 const getAllImages = async (): Promise<string[]> => {
   const images = await fs.promises.readdir(IMAGE_BASE_PATH);
