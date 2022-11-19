@@ -8,7 +8,7 @@ export interface GalleryItemProps {
 
 const RESOLUTION = 500;
 
-const ImageWrapper = styled('span', {
+const ImageWrapper = styled('div', {
   position: 'relative',
   height: '100%',
   maxHeight: '100%',
