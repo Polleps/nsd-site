@@ -24,13 +24,14 @@ const StyledCard = styled(Card, {
 
 const iconClass = css({
   width: '5rem',
+  color: '#67788d',
 })();
 
 const Title = styled('span', {
   flex: 1,
   textAlign: 'center',
   fontSize: theme.fontSizes.large,
-  color: theme.colors.link,
+  color: theme.colors.textLight,
   fontWeight: theme.fontWeights.bold,
 });
 
@@ -40,9 +41,9 @@ export const SocialLink: React.FC<SoscialLinkProps> = ({
   name,
 }) => (
   <a href={link}>
-  <StyledCard>
-    <Icon icon={icon} className={iconClass.toString()} />
+    <StyledCard>
+      <Icon icon={icon} className={iconClass.toString()} />
       <Title>{name}</Title>
-  </StyledCard>
+    </StyledCard>
   </a>
 );

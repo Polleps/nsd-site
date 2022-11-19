@@ -51,14 +51,14 @@ export const Gallery: React.FC<GalleryProps> = ({ initialGalleryItems }) => {
     return () => {
       clearTimeout(id);
     };
-  }, [items]);
+  }, [ items ]);
 
   return (
     <Wrapper>
-      <GalleryItem src={items[0]} />
-      <GalleryItem src={items[1]} />
-      <GalleryItem src={items[2]} />
-      <GalleryItem src={items[3]} />
+      <GalleryItem src={items[ 0 ]} />
+      <GalleryItem src={items[ 1 ]} />
+      <GalleryItem src={items[ 2 ]} />
+      <GalleryItem src={items[ 3 ]} />
     </Wrapper>
   );
 };

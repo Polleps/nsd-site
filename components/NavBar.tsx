@@ -3,12 +3,6 @@ import Link from 'next/link';
 import { theme } from '../stitches.config';
 
 const StyledNav = styled('nav', {
-  '& > ul': {
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    width: '100%',
-  },
   'a:hover': {
     textDecoration: 'underline',
   },
@@ -26,29 +20,43 @@ const StyledNav = styled('nav', {
   },
 });
 
+const List = styled('ul', {
+  display: 'flex',
+  justifyContent: 'space-around',
+  flexWrap: 'wrap',
+  gap: '1rem',
+  width: '100%',
+  padding: theme.sizes.md,
+
+  '@media (max-width: 599px)': {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+});
+
 export const NavBar = () => (
   <StyledNav>
-    <ul>
+    <List>
       <li>
         <Link href="/">
           <a>Home</a>
         </Link>
       </li>
       <li>
-        <Link href="/">
-          <a>Lorem</a>
+        <Link href="/mvdm">
+          Match van de maand
         </Link>
       </li>
       <li>
-        <Link href="/">
-          <a>Toernooien</a>
-        </Link>
+        <a href="https://pgksmash.nl/agenda" target="_blank" rel="noreferrer">
+          Toernooien
+        </a>
       </li>
       <li>
-        <Link href="/">
-          <a>Nieuws</a>
+        <Link href="/articles">
+          Tips & Tricks
         </Link>
       </li>
-    </ul>
+    </List>
   </StyledNav>
 );

@@ -28,8 +28,8 @@ const StyledHeader = styled('header', {
 
   '@smDown': {
     backgroundSize: 'unset',
-    gridTemplateAreas: '"nav" "content"',
-    gridTemplateRows: '4rem 1fr',
+    gridTemplateAreas: '"content" "nav"',
+    gridTemplateRows: '1fr auto',
     paddingTop: 0,
   },
 });
@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({ tournaments, cmsData }) => (
           <DiscordInvite />
         </DiscordInviteWrapper>
         <TournamentsWrapper>
-          <TournamentList tournaments={tournaments}/>
+          <TournamentList tournaments={tournaments} />
         </TournamentsWrapper>
       </HeaderContent>
     </HeaderContainer>

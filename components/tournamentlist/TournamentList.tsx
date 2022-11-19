@@ -18,17 +18,23 @@ const StyledAnchor = styled('a', {
   fontSize: theme.fontSizes.large,
 });
 
+const List = styled('ol', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.sizes.md,
+});
+
 export const TournamentList: React.FC<TournamentListProps> = ({ tournaments }) => {
 
   return (
     <>
-      <ol>
+      <List>
         {tournaments.map(tournament => (
           <li key={tournament.id}>
-            <TournamentCard tournament={tournament}/>
+            <TournamentCard tournament={tournament} />
           </li>
         ))}
-      </ol>
+      </List>
       <StyledAnchor
         href="https://pgksmash.nl/agenda"
         target="_blank"

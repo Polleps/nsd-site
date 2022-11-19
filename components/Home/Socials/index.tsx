@@ -22,7 +22,18 @@ const StyledContainer = styled(Container, {
 });
 
 const Heading = styled('h2', {
-  fontSize: theme.fontSizes.xLarge,
+  textAlign: 'center',
+  fontSize: theme.fontSizes.colorHeadings,
+  backgroundImage: theme.colors.gradientMain,
+  backgroundClip: 'text',
+  color: 'transparent',
+  width: 'fit-content',
+  margin: '0 auto',
+  filter: 'brightness(1.5)',
+  textShadow: theme.shadows.main,
+  '&h2': {
+    margin: '0',
+  },
 });
 
 const SocialList = styled('ul', {
@@ -32,11 +43,11 @@ const SocialList = styled('ul', {
   gap: theme.sizes.lg,
 });
 
-export const Socials: React.FC<SocialsProps> = ({cmsData}) => (
+export const Socials: React.FC<SocialsProps> = ({ cmsData }) => (
   <Wrapper>
     <StyledContainer size="large">
       <Heading>
-        Waar zijn we te vinden?
+        {cmsData.homepage.linksHeading}
       </Heading>
       <SocialList>
         {cmsData.homepage.links?.map((link) => (

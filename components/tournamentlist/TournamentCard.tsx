@@ -13,7 +13,7 @@ const dateOptions: Intl.DateTimeFormatOptions = {
   month: 'long',
 };
 
-const DateWrapper = styled('div', {
+const DateWrapper = styled('time', {
   // textAlign: 'end',
   fontWeight: theme.fontWeights.medium,
   color: 'rgba(255 255 255 / 57%)',
@@ -52,29 +52,41 @@ const LocationWrapper = styled('address', {
   fontStyle: 'normal',
 });
 
+const Link = styled('a', {
+  display: 'block',
+  transition: 'box-shadow 10    0ms ease-in-out',
+  borderRadius: theme.radii.main,
+  '&:hover, &:focus': {
+    outline: 'none',
+    boxShadow: `0px 0px 0px 2px ${theme.colors.secondary}`,
+  },
+});
+
 export const TournamentCard: React.FC<TournamentCardProps> = ({ tournament }) => (
   <div>
     <DateWrapper dateTime={new Date(tournament.startDate).toISOString()}>
       {new Date(tournament.startDate).toLocaleDateString('nl-NL', dateOptions)}
     </DateWrapper>
-    <Card>
-      <CardContent>
-        <ImageWrapper>
-          <Image
-            className="tournament-card-image"
-            height={100}
-            width={100}
-            src={tournament.image ?? ''}
-            alt={`Logo of ${tournament.title}`}
-          />
+    <Link href={`https://www.start.gg/tournament/${tournament.url}`} target="_blank" rel="noreferrer">
+      <Card>
+        <CardContent>
+          <ImageWrapper>
+            <Image
+              className="tournament-card-image"
+              height={100}
+              width={100}
+              src={tournament.image ?? ''}
+              alt={`Logo of ${tournament.title}`}
+            />
           </ImageWrapper>
-        <TitleWrapper>
-          {tournament.title}
-        </TitleWrapper>
-        <LocationWrapper>
-          {tournament.city}
-        </LocationWrapper>
-      </CardContent>
-    </Card>
+          <TitleWrapper>
+            {tournament.title}
+          </TitleWrapper>
+          <LocationWrapper>
+            {tournament.city}
+          </LocationWrapper>
+        </CardContent>
+      </Card>
+    </Link>
   </div>
 );

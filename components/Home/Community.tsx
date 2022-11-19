@@ -12,11 +12,10 @@ export interface CommunityProps {
 
 const Wrapper = styled('div', {
   display: 'grid',
-  gridTemplateAreas: '"title title" "gallery subtitle" "gallery video"',
-  gridTemplateRows: 'auto 1.5fr 5.5fr',
+  gridTemplateAreas: '"title title" "subtitle subtitle" "gallery video"',
+  gridTemplateRows: 'auto auto 5.5fr',
   gridTemplateColumns: '1.5fr 1fr',
-  height: '50rem',
-  gap: theme.sizes.xl,
+  gap: theme.sizes.lg,
   marginTop: theme.sizes.xl,
   '@smDown': {
     gridTemplateAreas: '"title" "subtitle" "gallery" "video"',
@@ -28,37 +27,57 @@ const Wrapper = styled('div', {
 
 const CommunityTitle = styled('h2', {
   textAlign: 'center',
-  fontSize: theme.fontSizes.xLarge,
+  fontSize: theme.fontSizes.colorHeadings,
+  backgroundImage: theme.colors.gradientMain,
+  backgroundClip: 'text',
+  color: 'transparent',
+  width: 'fit-content',
+  margin: '0 auto',
+  filter: 'brightness(1.5)',
+  textShadow: theme.shadows.main,
+  '&h2': {
+    margin: '0',
+  },
+});
+
+const Subtitle = styled('p', {
+  textAlign: 'center',
+  fontSize: '1.3rem',
 });
 
 const VideoWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: theme.sizes.md,
+  justifyContent: 'center',
+  height: '100%',
+  backgroundColor: theme.colors.backgroundGrayTransparantBlur,
+  borderRadius: theme.radii.main,
+  padding: theme.sizes.md,
 });
 
 const VideoHeading = styled('h3', {
   fontSize: theme.fontSizes.large,
 });
 
-export const Community: React.FC<CommunityProps> = ({initialGalleryItems, cmsData}) => (
+export const Community: React.FC<CommunityProps> = ({ initialGalleryItems, cmsData }) => (
   <Wrapper>
     <Slot area="title">
       <CommunityTitle>{cmsData.homepage.communityHeading}</CommunityTitle>
     </Slot>
+    <Slot area="subtitle">
+      <Subtitle>{cmsData.homepage.communitySubtitle}</Subtitle>
+    </Slot>
     <Slot area="gallery">
       <Gallery initialGalleryItems={initialGalleryItems} />
-    </Slot>
-    <Slot area="subtitle">
-      <p>{cmsData.homepage.communitySubtitle}</p>
     </Slot>
     <Slot area="video">
       <VideoWrapper>
         <VideoHeading>{cmsData.homepage.communityMotmHeading}</VideoHeading>
-        <span>{cmsData.motm?.[0].videoTitle}</span>
+        <span>{cmsData.motm?.[ 0 ].videoTitle}</span>
         <Video
-          ytSrc={cmsData.motm?.[0].videoUrl!}
-          title={cmsData.motm?.[0].videoTitle!}
+          ytSrc={cmsData.motm?.[ 0 ].videoUrl!}
+          title={cmsData.motm?.[ 0 ].videoTitle!}
         />
       </VideoWrapper>
     </Slot>

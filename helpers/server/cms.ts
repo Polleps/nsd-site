@@ -1,5 +1,7 @@
-import type { CMSData, HomepageCMSResponse } from '../../types/CMS';
+import type { ArticleCollectionResponse, ArticleResponse, CMSData, HomepageCMSResponse } from '../../types/CMS';
 import { Exists, pick } from '../obj';
+
+// TODO: This turned into a mess, should be refactored in the future.
 
 const CMS_URL = process.env.CMS_URL!;
 const CMS_TOKEN = process.env.CMS_ACCESS_TOKEN!;
@@ -11,13 +13,13 @@ type Query<T extends Record<string, unknown> = Record<string, unknown>> = {
   transform: (data: Partial<CMSData>) => T;
 };
 
-type TransformerPick<K extends keyof CMSData> = Exists<Pick<Partial<CMSData>, K>>
+type TransformerPick<K extends keyof CMSData> = Exists<Pick<Partial<CMSData>, K>>;
 
 export type HeaderQuery = Query<{
   header: TransformerPick<'pageTitle' | 'headerParagraph'>;
 }>;
 
-export type HeaderData = ReturnType<HeaderQuery['transform']>;
+export type HeaderData = ReturnType<HeaderQuery[ 'transform' ]>;
 
 export type HomePageQuery = Query<{
   homepage: TransformerPick<'communityHeading' |
@@ -26,12 +28,13 @@ export type HomePageQuery = Query<{
     'linksHeading' |
     'links'>;
 }>;
-export type HomePageData = ReturnType<HomePageQuery['transform']>;
+export type HomePageData = ReturnType<HomePageQuery[ 'transform' ]>;
 
 export type MotMQuery = Query<TransformerPick<'motm'>>;
-export type MotMData = ReturnType<MotMQuery['transform']>;
+export type MotMData = ReturnType<MotMQuery[ 'transform' ]>;
 
 type PossibleQueries = HeaderQuery | HomePageQuery | MotMQuery;
+
 const fetchData = async <T>(query: string, variables?: Record<string, string>): Promise<T> =>
   fetch(CMS_URL, {
     method: 'POST',
@@ -47,17 +50,17 @@ const fetchData = async <T>(query: string, variables?: Record<string, string>): 
 
 const mergeQueries = (queries: PossibleQueries[]) => queries
   .reduce((acc, c) => ({
-  query: acc.query + c.query,
-  variables: { ...acc.variables, ...c.variables },
-  transform: (data: Partial<CMSData>) => ({
-    ...acc.transform(data),
-    ...c.transform(data),
-  }),
-  }),  {
+    query: acc.query + c.query,
+    variables: { ...acc.variables, ...c.variables },
+    transform: (data: Partial<CMSData>) => ({
+      ...acc.transform(data),
+      ...c.transform(data),
+    }),
+  }), {
     query: '',
     variables: {},
     transform: (data: Partial<CMSData>) => ({}),
-});
+  });
 
 export const queryBuilder = <T>(...queries: PossibleQueries[]) => {
   const { query, variables, transform } = mergeQueries(queries);
@@ -127,3 +130,71 @@ export const motmQuery = (limit?: number): MotMQuery => ({
   variables: {},
   transform: (data) => pick(data, 'motm'),
 });
+
+export const fetchArticles = async () => {
+  const query = `
+  {
+    articleCollection {
+      items {
+        title
+        description
+        thumbnail {
+          url
+          width
+          height
+        }
+        sys {
+          id
+        }
+      }
+    }
+  }
+  `;
+
+  const response = await fetchData<ArticleCollectionResponse>(query);
+  try {
+    return response.data.articleCollection.items;
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    throw new Error('Something went wrong.');
+  }
+
+};
+
+export const fetchArticle = async (id: string) => {
+  const query = `
+  query($id: String!) {
+    article(id: $id) {
+      title
+      thumbnail {
+        url
+      }
+      description
+      content {
+        json
+        links {
+          assets {
+            block {
+              sys {
+                id
+              }
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+  `;
+
+  const response = await fetchData<ArticleResponse>(query, { id });
+
+  try {
+    return response.data.article;
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    throw new Error('Something went wrong.');
+  }
+};

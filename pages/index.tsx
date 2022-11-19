@@ -9,6 +9,7 @@ import { fetchTournaments } from '../helpers/server/fetchTournaments';
 import { getGalleryItems } from '../helpers/server/galleryItems';
 import { HeaderData, headerQuery, HomePageData, homepageQuery, MotMData, motmQuery, queryBuilder } from '../helpers/server/cms';
 import { Tournament } from '../types/Tournament';
+import banner from '../public/banner.webp';
 
 interface HomepageProps {
   tournaments: Tournament[];
@@ -16,8 +17,9 @@ interface HomepageProps {
   cmsData: HomePageData & HeaderData & MotMData;
 }
 
-export const getServerSideProps: GetServerSideProps = async (): Promise<{ props: HomepageProps; }> => {
-  const homeQuery = queryBuilder<HomepageProps['cmsData']>(
+export const getServerSideProps: GetServerSideProps = async ({ res }): Promise<{ props: HomepageProps; }> => {
+  res.setHeader('Cache-Control', 'max-age=43200, stale-while-revalidate=21600');
+  const homeQuery = queryBuilder<HomepageProps[ 'cmsData' ]>(
     homepageQuery(),
     headerQuery(),
     motmQuery(1),
@@ -27,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (): Promise<{ props:
     filteredTournaments,
     initialGalleryItems,
     cmsData,
-  ] = await Promise.all([fetchTournaments(), getGalleryItems(4), homeQuery.fetch()]);
+  ] = await Promise.all([ fetchTournaments(), getGalleryItems(4), homeQuery.fetch() ]);
 
   return {
     props: {
@@ -43,16 +45,17 @@ const Home: NextPage<HomepageProps> = ({ tournaments, initialGalleryItems, cmsDa
     <>
       <Head>
         <title>{cmsData.header.pageTitle}</title>
-        { /*TODO: Add Description */}
-        <meta name="description" content="TODO ADD DESCRIPTION" />
+        <meta name="description" content="Alles over de Nederlandse Smash community vind je hier. Van toernooien tot video's" />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:image" content={banner.src} />
+        <meta />
       </Head>
       <Header tournaments={tournaments} cmsData={cmsData} />
       <main>
         <Container size="large">
           <Community initialGalleryItems={initialGalleryItems} cmsData={cmsData} />
         </Container>
-        <Socials cmsData={cmsData}/>
+        <Socials cmsData={cmsData} />
       </main>
     </>
   );

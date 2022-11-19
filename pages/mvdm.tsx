@@ -8,14 +8,17 @@ import { HeaderData, headerQuery, MotMData, motmQuery, queryBuilder } from '../h
 import { fetchTournaments } from '../helpers/server/fetchTournaments';
 import { styled, theme } from '../stitches.config';
 import { Tournament } from '../types/Tournament';
+import banner from '../public/banner.webp';
 
 interface MOTMProps {
   tournaments: Tournament[];
   cmsData: HeaderData & MotMData;
 }
 
-export const getServerSideProps: GetServerSideProps = async (): Promise<{ props: MOTMProps; }> => {
-  const mvdmQuery = queryBuilder<MOTMProps['cmsData']>(
+export const getServerSideProps: GetServerSideProps = async ({ res }): Promise<{ props: MOTMProps; }> => {
+  res.setHeader('Cache-Control', 'max-age=43200, stale-while-revalidate=21600');
+
+  const mvdmQuery = queryBuilder<MOTMProps[ 'cmsData' ]>(
     headerQuery(),
     motmQuery(),
   );
@@ -23,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (): Promise<{ props:
   const [
     tournaments,
     cmsData,
-  ] = await Promise.all([fetchTournaments(), mvdmQuery.fetch()]);
+  ] = await Promise.all([ fetchTournaments(), mvdmQuery.fetch() ]);
 
   return {
     props: {
@@ -44,9 +47,9 @@ const MOTM: NextPage<MOTMProps> = ({ tournaments, cmsData }: MOTMProps) => {
     <>
       <Head>
         <title>Match van de maand</title>
-        { /*TODO: Add Description */}
-        <meta name="description" content="TODO ADD DESCRIPTION" />
+        <meta name="description" content="Alles over de Nederlandse Smash community vind je hier. Van toernooien tot video's" />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:image" content={banner.src} />
       </Head>
       <Header tournaments={tournaments} cmsData={cmsData} />
       <main>

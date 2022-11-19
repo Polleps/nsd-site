@@ -14,7 +14,7 @@ export const getGalleryItems = async (amount: number): Promise<string[]> => {
 
   for (let i = 0; i < amount; i++) {
     const randomIndex = Math.floor(Math.random() * allImages.length);
-    const [randomImage] = allImages.splice(randomIndex, 1);
+    const [ randomImage ] = allImages.splice(randomIndex, 1);
 
     images.push(randomImage);
   }

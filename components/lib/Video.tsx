@@ -6,17 +6,24 @@ export interface VideoProps {
 }
 
 const StyledIframe = styled('iframe', {
-  height: '30rem',
   // backgroundColor: 'white',
   borderRadius: theme.radii.main,
-  aspectRatio: '16 / 9',
+  aspectRatio: '16 / 12',
   maxWidth: '100%',
 });
 
 const buildYtEmbedUrl = (ytUrl: string) => {
   const [ id ] = Array.from(ytUrl.matchAll(/\w{11}/g));
+  const url = new URL(ytUrl);
+  const time = url.searchParams.get('t');
 
-  return `https://www.youtube-nocookie.com/embed/${id}`;
+  const embedUrl = new URL(`https://www.youtube-nocookie.com/embed/${id}`);
+
+  if (time) {
+    embedUrl.searchParams.set('start', time);
+  }
+
+  return embedUrl.toString();
 };
 
 
@@ -25,8 +32,8 @@ export const Video: React.FC<VideoProps> = ({ ytSrc, title }) => (
     src={buildYtEmbedUrl(ytSrc)}
     title={title}
     {...{}/* @ts-ignore */}
-    frameborder="0"
+    frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen={true}
+    allowFullScreen={true}
   />
 );

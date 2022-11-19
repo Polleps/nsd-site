@@ -1,3 +1,4 @@
+import { Article } from './article';
 import { ValidIcon } from '../components/lib/Icon';
 
 export interface CommunityLink {
@@ -20,6 +21,33 @@ export interface MotM {
   videoTitle: string;
   videoUrl: string;
   date: string;
+}
+
+export interface ArticleMeta {
+  title: string;
+  description: string;
+  thumbnail: {
+    url: string;
+    width: number;
+    height: number;
+  };
+  sys: {
+    id: string;
+  };
+}
+
+export interface ArticleCollectionResponse {
+  data: {
+    articleCollection: {
+      items: ArticleMeta[];
+    };
+  };
+}
+
+export interface ArticleResponse {
+  data: {
+    article: Article | null;
+  };
 }
 
 export interface HomepageCMSResponse {

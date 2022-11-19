@@ -1,5 +1,8 @@
 import { createStitches } from '@stitches/react';
 
+export const PRIMARY_COLOR = '#0D1334';
+export const SECONDARY_COLOR = '#42B271';
+export const HTML_THEME_COLOR = '#18393d';
 export const {
   styled,
   css,
@@ -21,11 +24,14 @@ export const {
       backgroundDarkTransparantPlain: 'rgb(10 10 10 / 70%)',
       backgroundDarkTransparantBlur: 'rgb(10 10 10 / 30%)',
       gradientMain: 'linear-gradient(225deg, rgba(69,193,112,1) 0%, rgba(39,51,121,1) 100%)',
-      primary: '#0D1334',
+      primary: PRIMARY_COLOR,
       primaryLight: '#20284A',
       primaryTransparent: 'rgba(4 13 51 / 89%)',
       text: 'white',
-      secondary: '#42B271',
+      textLight: '#dfdfdf',
+      textDark: '#858585',
+      secondary: SECONDARY_COLOR,
+      htmlThemeColor: HTML_THEME_COLOR,
       link: '$secondary',
     },
     fonts: {
@@ -36,6 +42,7 @@ export const {
       medium: '1rem',
       large: '1.5rem',
       xLarge: '2rem',
+      colorHeadings: '2.9rem',
     },
     fontWeights: {
       extraLight: '200',

@@ -1,0 +1,20 @@
+{
+    "name": "Smash Nederland",
+    "short_name": "Smash Nederland",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#18393d",
+    "background_color": "#14151a",
+    "display": "minimal-ui"
+}
