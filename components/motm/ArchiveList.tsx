@@ -38,7 +38,15 @@ const devideIntoYears = (matches: MotM[]) => {
 };
 
 export const ArchiveList: React.FC<ArchiveListProps> = ({ matches }) => {
-  const devidedMatches = React.useMemo(() => devideIntoYears(matches.slice(1)), [matches]);
+  const devidedMatches = React.useMemo(() => devideIntoYears(matches.slice(1)), [ matches ]);
+
+  if (matches.length === 1) {
+    return <Wrapper>
+      <Container size="large">
+        Er is nog niks om terug te kijken.
+      </Container>
+    </Wrapper>;
+  }
 
   return (
     <Wrapper>
