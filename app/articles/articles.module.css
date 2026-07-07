@@ -1,0 +1,32 @@
+.container {
+  margin-block: var(--size-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-md);
+}
+
+.itemCard {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: 'image title' 'image description';
+  height: 10rem;
+  overflow: hidden;
+  gap: var(--size-md);
+}
+
+.thumbnail {
+  grid-area: image;
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+  margin: -1rem;
+}
+
+.title {
+  grid-area: title;
+}
+
+.description {
+  grid-area: description;
+  color: var(--color-text-light);
+}

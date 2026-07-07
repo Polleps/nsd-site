@@ -1,0 +1,34 @@
+.wrapper {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.card {
+  width: min(100%, 90ch);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-background-light);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-height: min(100%, 20rem);
+}
+
+.heading {
+  margin-block-end: 1rem;
+}
+
+.errCode {
+  color: #ff3f3f;
+}
+
+.button {
+  margin-top: 2rem;
+  display: inline-block;
+}
+
+.button span {
+  font-size: 1rem !important;
+}

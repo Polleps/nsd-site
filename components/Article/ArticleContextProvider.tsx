@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Article } from '../../types/article';
 
@@ -24,7 +26,7 @@ export const ArticleContext = React.createContext<ArticleContext>({
     },
   },
   getUrlById: () => '',
-},);
+});
 
 export interface ArticleContextProviderProps {
   article: Article;

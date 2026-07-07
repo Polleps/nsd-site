@@ -1,0 +1,83 @@
+:root {
+  /* colors */
+  --color-background: #14151a;
+  --color-background-light: #23252e;
+  --color-background-gray: #181c2c;
+  --color-background-gray-transparent-blur: rgba(38, 38, 38, 0.3);
+  --color-background-gray-transparent-plain: rgba(38, 38, 38, 0.9);
+  --color-background-dark-transparent-plain: rgb(10 10 10 / 70%);
+  --color-background-dark-transparent-blur: rgb(10 10 10 / 30%);
+  --color-gradient-main: linear-gradient(225deg, rgba(69, 193, 112, 1) 0%, rgba(39, 51, 121, 1) 100%);
+  --color-primary: #0d1334;
+  --color-primary-light: #20284a;
+  --color-primary-transparent: rgba(4 13 51 / 89%);
+  --color-background-transparent: linear-gradient(rgba(27 62 66 / 0.9), var(--color-primary-transparent));
+  --color-text: white;
+  --color-text-light: #dfdfdf;
+  --color-text-dark: #858585;
+  --color-secondary: #42b271;
+  --color-html-theme-color: #18393d;
+  --color-link: var(--color-secondary);
+
+  /* fonts */
+  --font-main: 'Montserrat', sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  /* font sizes */
+  --font-size-small: 0.4rem;
+  --font-size-medium: 1rem;
+  --font-size-large: 1.5rem;
+  --font-size-x-large: 2rem;
+  --font-size-color-headings: 2.9rem;
+
+  /* font weights */
+  --font-weight-extra-light: 200;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* sizes */
+  --size-xs: 0.25rem;
+  --size-sm: 0.5rem;
+  --size-md: 1rem;
+  --size-lg: 2rem;
+  --size-xl: clamp(2rem, 4vw, 4.4rem);
+
+  /* shadows */
+  --shadow-pressed: 0 1px 7px rgba(0 0 0 / 35%);
+  --shadow-main: 0 3px 15px rgba(0 0 0 / 25%);
+
+  /* radii */
+  --radii-main: 20px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline-color: var(--color-secondary);
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-main);
+  background-color: var(--color-background);
+  color: white;
+}
+
+@media (--xsDown) {
+  :root {
+    font-size: 12px;
+  }
+}

@@ -1,39 +1,16 @@
-import { styled, theme } from '../../../stitches.config';
+import clsx from 'clsx';
+import type { ReactNode } from 'react';
+import styles from './Card.module.css';
 
-export const Card = styled('div', {
-  backgroundColor: theme.colors.backgroundGrayTransparantPlain,
+export interface CardProps {
+  type?: 'simple' | 'custom';
+  interaction?: boolean;
+  className?: string;
+  children?: ReactNode;
+}
 
-  '@supports (backdrop-filter: blur(10px))': {
-    backgroundColor: theme.colors.backgroundGrayTransparantBlur,
-    backdropFilter: 'blur(10px)',
-  },
-  '@supports (-webkit-backdrop-filter: blur(10px))': {
-    backgroundColor: theme.colors.backgroundGrayTransparantBlur,
-    '-webkit-backdrop-filter': 'blur(10px)',
-  },
-
-  borderRadius: theme.radii.main,
-  boxShadow: theme.shadows.main,
-  variants: {
-    type: {
-      simple: {
-        padding: theme.sizes.md,
-      },
-      custom: {
-        padding: '0px',
-      },
-    },
-    interaction: {
-      true: {
-        '&:hover, &:focus': {
-          filter: 'brightness(1.1)',
-          boxShadow: `${theme.shadows.main}, 0px 0px 0px 2px ${theme.colors.secondary}`,
-        },
-      },
-    },
-  },
-  defaultVariants: {
-    type: 'simple',
-    interaction: false,
-  },
-});
+export const Card = ({ type = 'simple', interaction = false, className, children }: CardProps) => (
+  <div className={clsx(styles.card, styles[type], interaction && styles.interaction, className)}>
+    {children}
+  </div>
+);

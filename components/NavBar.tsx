@@ -1,45 +1,12 @@
-import { styled } from '@stitches/react';
 import Link from 'next/link';
-import { theme } from '../stitches.config';
-
-const StyledNav = styled('nav', {
-  'a:hover': {
-    textDecoration: 'underline',
-  },
-  alignItems: 'center',
-  backgroundColor: theme.colors.backgroundDarkTransparantPlain,
-  borderBottom: '2px solid $secondary',
-  color: '$text',
-  display: 'flex',
-  fontSize: '$large',
-  fontWeight: '$medium',
-  height: '100%',
-  '@supports (backdrop-filter: blur(10px))': {
-    backgroundColor: theme.colors.backgroundDarkTransparantBlur,
-    backdropFilter: 'blur(20px)',
-  },
-});
-
-const List = styled('ul', {
-  display: 'flex',
-  justifyContent: 'space-around',
-  flexWrap: 'wrap',
-  gap: '1rem',
-  width: '100%',
-  padding: theme.sizes.md,
-
-  '@media (max-width: 599px)': {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-});
+import styles from './NavBar.module.css';
 
 export const NavBar = () => (
-  <StyledNav>
-    <List>
+  <nav className={styles.nav}>
+    <ul className={styles.list}>
       <li>
         <Link href="/">
-          <a>Home</a>
+          Home
         </Link>
       </li>
       <li>
@@ -57,6 +24,6 @@ export const NavBar = () => (
           Tips & Tricks
         </Link>
       </li>
-    </List>
-  </StyledNav>
+    </ul>
+  </nav>
 );

@@ -1,0 +1,65 @@
+.inviteCard {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 7rem 1fr 1fr 1fr;
+  grid-template-areas: 'icon title title button' 'icon online members button';
+  gap: var(--size-md);
+  max-width: 50rem;
+}
+
+@media (--xsDown) {
+  .inviteCard {
+    grid-template-columns: 5rem 1fr 1fr 1fr;
+    grid-template-areas: 'icon title title title' 'online online members members' 'button button button button';
+  }
+}
+
+.icon {
+  grid-area: icon;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  grid-area: title;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: var(--size-sm);
+}
+
+.count::before {
+  content: ' ';
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+}
+
+.online {
+  grid-area: online;
+}
+
+.online::before {
+  background-color: #45c170;
+}
+
+.members {
+  grid-area: members;
+}
+
+.members::before {
+  background-color: #6c6c6c;
+}
+
+.button {
+  grid-area: button;
+}

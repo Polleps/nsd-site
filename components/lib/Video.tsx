@@ -1,16 +1,9 @@
-import { styled, theme } from '../../stitches.config';
+import styles from './Video.module.css';
 
 export interface VideoProps {
   ytSrc: string;
   title: string;
 }
-
-const StyledIframe = styled('iframe', {
-  // backgroundColor: 'white',
-  borderRadius: theme.radii.main,
-  aspectRatio: '16 / 12',
-  maxWidth: '100%',
-});
 
 const buildYtEmbedUrl = (ytUrl: string) => {
   const [ id ] = Array.from(ytUrl.matchAll(/\w{11}/g));
@@ -26,14 +19,13 @@ const buildYtEmbedUrl = (ytUrl: string) => {
   return embedUrl.toString();
 };
 
-
 export const Video: React.FC<VideoProps> = ({ ytSrc, title }) => (
-  <StyledIframe
+  <iframe
+    className={styles.iframe}
     src={buildYtEmbedUrl(ytSrc)}
     title={title}
-    {...{}/* @ts-ignore */}
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen={true}
+    allowFullScreen
   />
 );

@@ -1,0 +1,29 @@
+.thumb {
+  width: 100%;
+  border-radius: var(--radii-main);
+  transition: filter 0.1s ease-in-out;
+}
+
+.heading {
+  text-transform: capitalize;
+  transition: color 0.1s ease-in-out;
+  flex: 1;
+}
+
+.link {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+  height: 100%;
+}
+
+.link:hover .heading,
+.link:focus .heading {
+  color: var(--color-secondary);
+}
+
+.link:hover .thumb,
+.link:focus .thumb {
+  filter: brightness(0.8);
+}

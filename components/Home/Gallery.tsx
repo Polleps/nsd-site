@@ -1,7 +1,8 @@
-import Image from 'next/image';
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import { styled, theme } from '../../stitches.config';
 import { GalleryItem } from './GalleryItem';
+import styles from './Gallery.module.css';
 
 export interface GalleryProps {
   initialGalleryItems: string[];
@@ -9,13 +10,6 @@ export interface GalleryProps {
 
 const MIN_TIME = 5;
 const MAX_TIME = 10;
-
-const Wrapper = styled('div', {
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: theme.sizes.lg,
-  height: '100%',
-});
 
 const fetchImage = async (items: string[]): Promise<string> => {
   const { paths }: { paths: string[]; } = await fetch('api/gallery/1').then((res) => res.json());
@@ -58,11 +52,11 @@ export const Gallery: React.FC<GalleryProps> = ({ initialGalleryItems }) => {
   }, [ items ]);
 
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       <GalleryItem src={items[ 0 ]} />
       <GalleryItem src={items[ 1 ]} />
       <GalleryItem src={items[ 2 ]} />
       <GalleryItem src={items[ 3 ]} />
-    </Wrapper>
+    </div>
   );
 };

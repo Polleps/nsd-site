@@ -1,34 +1,16 @@
-import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react';
-import { styled, theme } from '../../stitches.config';
-import { createVars } from '../../helpers/createVars';
+'use client';
+
+import type { CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
+import styles from './GalleryItem.module.css';
 
 export interface GalleryItemProps {
   src: string;
 }
 
-const ImageWrapper = styled('div', {
-  position: 'relative',
-  height: '100%',
-  maxHeight: '100%',
-
-  '& img:last-child': {
-    opacity: 'var(--galleryItemOpacity, 0)',
-    transition: 'opacity 0.5s ease-in-out',
-    position: 'absolute',
-    inset: '0',
-  },
-});
-
-const Image = styled('img', {
-  borderRadius: theme.radii.main,
-  objectFit: 'cover',
-  width: '100%',
-  height: '100%',
-});
-
 export const GalleryItem: React.FC<GalleryItemProps> = ({ src }) => {
   const [ prevImg, setPrevImg ] = useState<string>();
-  const [ style, setOpacity ] = useReducer((_: any, galleryItemOpacity: number) => createVars({ galleryItemOpacity }), {});
+  const [ opacity, setOpacity ] = useState(0);
 
   useEffect(() => {
     setOpacity(1);
@@ -43,14 +25,15 @@ export const GalleryItem: React.FC<GalleryItemProps> = ({ src }) => {
   }, [ src ]);
 
   return (
-    <ImageWrapper css={style}>
+    <div className={styles.imageWrapper} style={{ '--galleryItemOpacity': opacity } as CSSProperties}>
       {prevImg && (
-        <Image src={prevImg} alt="" />
+        <img className={styles.image} src={prevImg} alt="" />
       )}
-      <Image
+      <img
+        className={styles.image}
         src={src}
         alt="een Nederlands smash toernooi"
       />
-    </ImageWrapper>
+    </div>
   );
 };

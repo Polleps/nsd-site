@@ -1,7 +1,7 @@
-import { Tournament } from '../../types/Tournament';
-import { Card } from '../lib/Card';
 import Image from 'next/image';
-import { styled, theme } from '../../stitches.config';
+import type { Tournament } from '../../types/Tournament';
+import { Card } from '../lib/Card';
+import styles from './TournamentCard.module.css';
 
 export interface TournamentCardProps {
   tournament: Tournament;
@@ -13,80 +13,36 @@ const dateOptions: Intl.DateTimeFormatOptions = {
   month: 'long',
 };
 
-const DateWrapper = styled('time', {
-  // textAlign: 'end',
-  fontWeight: theme.fontWeights.medium,
-  color: 'rgba(255 255 255 / 57%)',
-  fontSize: '2.4rem',
-  '@smDown': {
-    fontSize: '1.5rem',
-  },
-});
-
-const CardContent = styled('div', {
-  display: 'grid',
-  gap: theme.sizes.md,
-  gridTemplateColumns: '5rem auto',
-  gridTemplateRows: '2rem 2rem',
-  gridTemplateAreas: '"img title" "img location"',
-});
-
-const ImageWrapper = styled('div', {
-  gridArea: 'img',
-  '& .tournament-card-image': {
-    borderRadius: theme.radii.main,
-  },
-});
-
-const TitleWrapper = styled('span', {
-  gridArea: 'title',
-  fontSize: '1.15rem',
-  fontWeight: theme.fontWeights.medium,
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-});
-
-const LocationWrapper = styled('address', {
-  gridArea: 'location',
-  fontStyle: 'normal',
-});
-
-const Link = styled('a', {
-  display: 'block',
-  transition: 'box-shadow 10    0ms ease-in-out',
-  borderRadius: theme.radii.main,
-  '&:hover, &:focus': {
-    outline: 'none',
-    boxShadow: `0px 0px 0px 2px ${theme.colors.secondary}`,
-  },
-});
-
 export const TournamentCard: React.FC<TournamentCardProps> = ({ tournament }) => (
   <div>
-    <DateWrapper dateTime={new Date(tournament.startDate).toISOString()}>
+    <time className={styles.dateWrapper} dateTime={new Date(tournament.startDate).toISOString()}>
       {new Date(tournament.startDate).toLocaleDateString('nl-NL', dateOptions)}
-    </DateWrapper>
-    <Link href={`https://www.start.gg/tournament/${tournament.url}`} target="_blank" rel="noreferrer">
+    </time>
+    <a
+      className={styles.link}
+      href={`https://www.start.gg/tournament/${tournament.url}`}
+      target="_blank"
+      rel="noreferrer"
+    >
       <Card>
-        <CardContent>
-          <ImageWrapper>
+        <div className={styles.cardContent}>
+          <div className={styles.imageWrapper}>
             <Image
-              className="tournament-card-image"
+              className={styles.tournamentCardImage}
               height={100}
               width={100}
               src={tournament.image ?? ''}
               alt={`Logo of ${tournament.title}`}
             />
-          </ImageWrapper>
-          <TitleWrapper>
+          </div>
+          <span className={styles.titleWrapper}>
             {tournament.title}
-          </TitleWrapper>
-          <LocationWrapper>
+          </span>
+          <address className={styles.locationWrapper}>
             {tournament.city}
-          </LocationWrapper>
-        </CardContent>
+          </address>
+        </div>
       </Card>
-    </Link>
+    </a>
   </div>
 );

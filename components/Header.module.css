@@ -1,0 +1,73 @@
+.header {
+  background-image: var(--color-background-transparent), var(--color-background-transparent), url(/banner_cr.webp);
+  background-blend-mode: normal, color;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100%;
+  color: var(--color-text);
+  display: grid;
+  grid-template-areas: 'content' 'nav';
+  grid-template-rows: 1fr 4rem;
+  grid-template-columns: 1fr;
+  padding-top: var(--size-xl);
+  gap: var(--size-xl);
+}
+
+@media (--smDown) {
+  .header {
+    background-size: unset;
+    grid-template-areas: 'content' 'nav';
+    grid-template-rows: 1fr auto;
+    padding-top: 0;
+  }
+}
+
+.headerContainer {
+  grid-area: content;
+}
+
+.headerContent {
+  display: grid;
+  grid-template-areas: 'text' 'tournaments' 'discord';
+  gap: var(--size-xl);
+}
+
+@media (--md) {
+  .headerContent {
+    grid-template-areas: 'text . tournaments' 'discord . tournaments';
+  }
+}
+
+.textWrapper {
+  grid-area: text;
+  max-width: 70ch;
+}
+
+.textWrapper h1 {
+  font-size: 2.3rem;
+  font-weight: var(--font-weight-medium);
+}
+
+@media (--xsDown) {
+  .textWrapper h1 {
+    font-size: 2rem;
+  }
+}
+
+.textWrapper p {
+  font-size: 1.15rem;
+  margin-top: var(--size-md);
+}
+
+.discordInviteWrapper {
+  grid-area: discord;
+  align-self: end;
+}
+
+.tournamentsWrapper {
+  grid-area: tournaments;
+}
+
+.navWrapper {
+  grid-area: nav;
+}
