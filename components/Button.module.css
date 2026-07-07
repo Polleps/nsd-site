@@ -1,0 +1,40 @@
+.button {
+  position: relative;
+  transition: filter 100ms ease;
+  will-change: filter;
+}
+
+.button span {
+  background-image: var(--color-gradient-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--size-md) calc(var(--size-xl) * 1.5);
+  border-radius: var(--radii-main);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-medium);
+}
+
+.button::before {
+  background-image: var(--color-gradient-main);
+  content: '';
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radii-main);
+  z-index: -1;
+  transition: filter 100ms ease;
+  opacity: 0.8;
+  will-change: filter;
+}
+
+.button:hover::before,
+.button:focus::before {
+  filter: blur(10px);
+}
+
+.button:hover,
+.button:focus {
+  filter: brightness(1.3);
+}

@@ -2,11 +2,9 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: [
-      "images.start.gg",
-      "images.smash.gg",
-      "picsum.photos",
-      "atomicdata.dev",
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.start.gg' },
+      { protocol: 'https', hostname: 'images.smash.gg' },
     ],
   },
 };

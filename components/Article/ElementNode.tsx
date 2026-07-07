@@ -6,7 +6,7 @@ export interface ElementNodeProps {
   node: PossibleNode;
 }
 
-const elementMap = new Map<NodeType, React.ReactNode | (keyof JSX.IntrinsicElements)>([
+const elementMap = new Map<NodeType, React.ElementType>([
   [ NodeType.Heading1, 'h2' ],
   [ NodeType.Heading2, 'h3' ],
   [ NodeType.P, 'p' ],

@@ -1,0 +1,7 @@
+.container {
+  margin-top: var(--size-xl);
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  gap: var(--size-md);
+}

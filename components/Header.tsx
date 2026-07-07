@@ -1,99 +1,34 @@
-import React from 'react';
-import { Tournament } from '../types/Tournament';
-import { styled, theme } from '../stitches.config';
+import type { HeaderData } from '../helpers/server/cms';
+import type { Tournament } from '../types/Tournament';
 import { DiscordInvite } from './DiscordInvite';
 import { Container } from './lib/Container';
 import { NavBar } from './NavBar';
 import { TournamentList } from './tournamentlist/TournamentList';
-import type { HeaderData } from '../helpers/server/cms';
+import styles from './Header.module.css';
 
 export interface HeaderProps {
   tournaments: Tournament[];
   cmsData: HeaderData;
 }
 
-const StyledHeader = styled('header', {
-  backgroundImage: `${theme.colors.backgroundTransparent}, ${theme.colors.backgroundTransparent}, url(/banner_cr.webp)`,
-  backgroundBlendMode: 'normal, color',
-  backgroundRepeat: 'no-repeat',
-  backgroundAttachment: 'fixed',
-  backgroundSize: '100%',
-  color: theme.colors.text,
-  display: 'grid',
-  gridTemplateAreas: '"content" "nav"',
-  gridTemplateRows: '1fr 4rem',
-  gridTemplateColumns: '1fr',
-  paddingTop: theme.sizes.xl,
-  gap: theme.sizes.xl,
-
-  '@smDown': {
-    backgroundSize: 'unset',
-    gridTemplateAreas: '"content" "nav"',
-    gridTemplateRows: '1fr auto',
-    paddingTop: 0,
-  },
-});
-
-const HeaderContainer = styled(Container, {
-  gridArea: 'content',
-});
-
-const HeaderContent = styled('div', {
-  display: 'grid',
-  gridTemplateAreas: '"text" "tournaments" "discord"',
-  '@md': {
-    gridTemplateAreas: '"text . tournaments" "discord . tournaments"',
-  },
-  gap: theme.sizes.xl,
-});
-
-const TextWrapper = styled('div', {
-  gridArea: 'text',
-  maxWidth: '70ch',
-  '& h1': {
-    fontSize: '2.3rem',
-    fontWeight: theme.fontWeights.medium,
-    '@xsDown': {
-      fontSize: '2rem',
-    },
-  },
-  '& p': {
-    fontSize: '1.15rem',
-    marginTop: theme.sizes.md,
-  },
-});
-
-const DiscordInviteWrapper = styled('div', {
-  gridArea: 'discord',
-  alignSelf: 'end',
-});
-
-const TournamentsWrapper = styled('div', {
-  gridArea: 'tournaments',
-});
-
-const NavWrapper = styled('div', {
-  gridArea: 'nav',
-});
-
 export const Header: React.FC<HeaderProps> = ({ tournaments, cmsData }) => (
-  <StyledHeader>
-    <HeaderContainer size="large">
-      <HeaderContent>
-        <TextWrapper>
+  <header className={styles.header}>
+    <Container className={styles.headerContainer} size="large">
+      <div className={styles.headerContent}>
+        <div className={styles.textWrapper}>
           <h1>{cmsData.header.pageTitle}</h1>
           <p>{cmsData.header.headerParagraph}</p>
-        </TextWrapper>
-        <DiscordInviteWrapper>
+        </div>
+        <div className={styles.discordInviteWrapper}>
           <DiscordInvite />
-        </DiscordInviteWrapper>
-        <TournamentsWrapper>
+        </div>
+        <div className={styles.tournamentsWrapper}>
           <TournamentList tournaments={tournaments} />
-        </TournamentsWrapper>
-      </HeaderContent>
-    </HeaderContainer>
-    <NavWrapper>
+        </div>
+      </div>
+    </Container>
+    <div className={styles.navWrapper}>
       <NavBar />
-    </NavWrapper>
-  </StyledHeader>
+    </div>
+  </header>
 );

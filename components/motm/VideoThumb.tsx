@@ -1,6 +1,6 @@
 import { getYTThumbnailUrl } from '../../helpers/youtube';
-import { styled, theme } from '../../stitches.config';
-import { MotM } from '../../types/CMS';
+import type { MotM } from '../../types/CMS';
+import styles from './VideoThumb.module.css';
 
 export interface VideoThumbProps {
   match: MotM;
@@ -15,40 +15,11 @@ export const VideoThumb: React.FC<VideoThumbProps> = ({ match }) => {
 
   return (
     <li>
-      <Link href={match.videoUrl} rel="noreferrer nofollow noopener" target="_blank">
-        <Heading>{date}</Heading>
+      <a className={styles.link} href={match.videoUrl} rel="noreferrer nofollow noopener" target="_blank">
+        <h3 className={styles.heading}>{date}</h3>
         <p>{match.videoTitle}</p>
-        <Thumb src={getYTThumbnailUrl(match.videoUrl)} />
-      </Link>
+        <img className={styles.thumb} src={getYTThumbnailUrl(match.videoUrl)} alt="" />
+      </a>
     </li>
   );
 };
-
-
-const Thumb = styled('img', {
-  // aspectRatio: '16/9',
-  width: '100%',
-  borderRadius: theme.radii.main,
-  transition: 'filter 0.1s ease-in-out',
-});
-
-const Heading = styled('h3', {
-  textTransform: 'capitalize',
-  transition: 'color 0.1s ease-in-out',
-  flex: 1,
-});
-
-const Link = styled('a', {
-  cursor: 'pointer',
-  [ `&:hover ${Heading}, &focus ${Heading}` ]: {
-    color: theme.colors.secondary,
-  },
-  [ `&:hover ${Thumb}, &focus ${Thumb}` ]: {
-    filter: 'brightness(0.8)',
-  },
-
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.sizes.sm,
-  height: '100%',
-});

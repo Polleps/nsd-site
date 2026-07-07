@@ -1,0 +1,3 @@
+.slot {
+  grid-area: var(--slot-area);
+}

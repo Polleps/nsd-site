@@ -1,8 +1,8 @@
 import React from 'react';
-import { styled, theme } from '../../stitches.config';
-import { MotM } from '../../types/CMS';
+import type { MotM } from '../../types/CMS';
 import { Container } from '../lib/Container';
 import { VideoThumb } from './VideoThumb';
+import styles from './ArchiveList.module.css';
 
 export interface ArchiveListProps {
   matches: MotM[];
@@ -11,13 +11,6 @@ export interface ArchiveListProps {
 interface YearLabelProps {
   year: number;
 }
-
-const Wrapper = styled('div', {
-  backgroundColor: theme.colors.backgroundLight,
-  marginTop: theme.sizes.xl,
-  paddingTop: theme.sizes.xl,
-  paddingBottom: `calc(${theme.sizes.xl} * 2)`,
-});
 
 const getYear = (date: string) => new Date(date).getFullYear();
 
@@ -41,55 +34,37 @@ export const ArchiveList: React.FC<ArchiveListProps> = ({ matches }) => {
   const devidedMatches = React.useMemo(() => devideIntoYears(matches.slice(1)), [ matches ]);
 
   if (matches.length === 1) {
-    return <Wrapper>
+    return <div className={styles.wrapper}>
       <Container size="large">
         Er is nog niks om terug te kijken.
       </Container>
-    </Wrapper>;
+    </div>;
   }
 
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       <Container size="large">
         <ol>
           {Array.from(devidedMatches.entries()).map(([ year, matches ]) => (
             <li key={year}>
               <YearLabel year={year} />
-              <ThumbGrid>
+              <ol className={styles.thumbGrid}>
                 {Array.from(matches).map((match) => (
                   <VideoThumb key={match.videoUrl} match={match} />
                 ))}
-              </ThumbGrid>
+              </ol>
             </li>
           ))}
         </ol>
       </Container>
-    </Wrapper>
+    </div>
   );
 };
 
 const YearLabel: React.FC<YearLabelProps> = ({ year }) => (
-  <YearLabelWrapper>
-    <Line />
+  <div className={styles.yearLabelWrapper}>
+    <div className={styles.line} />
     <h2>{year}</h2>
-    <Line />
-  </YearLabelWrapper>
+    <div className={styles.line} />
+  </div>
 );
-
-const YearLabelWrapper = styled('div', {
-  display: 'flex',
-  gap: theme.sizes.xl,
-  alignItems: 'center',
-});
-
-const Line = styled('div', {
-  borderBottom: `2px solid ${theme.colors.text}`,
-  flex: 1,
-});
-
-const ThumbGrid = styled('ol', {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-  gap: theme.sizes.lg,
-  paddingBlock: theme.sizes.lg,
-});

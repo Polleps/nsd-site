@@ -1,22 +1,15 @@
-import { styled, theme } from '../../../stitches.config';
+import clsx from 'clsx';
+import type { ReactNode } from 'react';
+import styles from './Container.module.css';
 
-export const Container = styled('div', {
-  padding: theme.sizes.md,
-  maxWidth: '100%',
+export interface ContainerProps {
+  size?: 'large';
+  className?: string;
+  children?: ReactNode;
+}
 
-  '@md': {
-    padding: '0px',
-    width: 'min(85%, 800px)',
-    margin: '0 auto',
-  },
-
-  variants: {
-    size: {
-      large: {
-        '@md': {
-          width: 'min(85%, 1600px)',
-        },
-      },
-    },
-  },
-});
+export const Container = ({ size, className, children }: ContainerProps) => (
+  <div className={clsx(styles.container, size === 'large' && styles.large, className)}>
+    {children}
+  </div>
+);

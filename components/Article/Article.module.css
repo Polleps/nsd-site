@@ -1,0 +1,30 @@
+.article {
+  text-align: left;
+  font-size: 1.1rem;
+  margin-bottom: 5rem;
+}
+
+.article p,
+.article h2,
+.article h3 {
+  margin-bottom: 1rem;
+}
+
+.article ol,
+.article ul {
+  margin-left: 1rem;
+  list-style: disc;
+}
+
+.article li:not(:last-of-type) > p {
+  margin-bottom: 0;
+}
+
+.article a {
+  color: var(--color-secondary);
+}
+
+.article a:hover,
+.article a:focus {
+  text-decoration: underline;
+}

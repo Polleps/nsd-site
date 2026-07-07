@@ -1,0 +1,24 @@
+.wrapper {
+  background-color: var(--color-background-light);
+  margin-top: var(--size-xl);
+  padding-top: var(--size-xl);
+  padding-bottom: calc(var(--size-xl) * 2);
+}
+
+.yearLabelWrapper {
+  display: flex;
+  gap: var(--size-xl);
+  align-items: center;
+}
+
+.line {
+  border-bottom: 2px solid var(--color-text);
+  flex: 1;
+}
+
+.thumbGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--size-lg);
+  padding-block: var(--size-lg);
+}
