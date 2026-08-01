@@ -2,6 +2,12 @@ import { Tournament } from '../../types/Tournament';
 
 const TOURNAMENT_ROUTE = 'https://pgksmash.nl/tournaments';
 
+export const fetchAllTournaments = async (): Promise<Tournament[]> => {
+  const tournaments = await fetch(TOURNAMENT_ROUTE).then((res) => res.json()) as Tournament[];
+
+  return tournaments ?? [];
+};
+
 export const fetchTournaments = async (): Promise<Tournament[]> => {
   const tournaments = await fetch(TOURNAMENT_ROUTE).then((res) => res.json()) as Tournament[];
 

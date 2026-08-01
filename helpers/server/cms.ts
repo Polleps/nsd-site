@@ -26,7 +26,9 @@ export type HomePageQuery = Query<{
     'communitySubtitle' |
     'communityMotmHeading' |
     'linksHeading' |
-    'links'>;
+    'links' |
+    'featuredTournament' |
+    'featuredTournamentDate'>;
 }>;
 export type HomePageData = ReturnType<HomePageQuery[ 'transform' ]>;
 
@@ -101,7 +103,9 @@ export const homepageQuery = (): HomePageQuery => ({
       communitySubtitle,
       communityMotmHeading,
       linksHeading,
-      links
+      links,
+      featuredTournament,
+      featuredTournamentDate
     }
   `,
   variables: { id: HOMEPAGE_ID },
@@ -113,6 +117,8 @@ export const homepageQuery = (): HomePageQuery => ({
       'communityMotmHeading',
       'linksHeading',
       'links',
+      'featuredTournament',
+      'featuredTournamentDate',
     ),
   }),
 });

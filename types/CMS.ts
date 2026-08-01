@@ -15,6 +15,8 @@ export interface HomePageCMSBaseData {
   communityMotmHeading: string;
   linksHeading: string;
   links: CommunityLink[];
+  featuredTournament?: string;
+  featuredTournamentDate?: string;
 }
 
 export interface MotM {

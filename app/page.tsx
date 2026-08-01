@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { Header } from '../components/Header';
 import { Community } from '../components/Home/Community';
+import { FeaturedTournament } from '../components/Home/FeaturedTournament';
 import { Container } from '../components/lib/Container';
 import { Socials } from '../components/Home/Socials';
-import { fetchTournaments } from '../helpers/server/fetchTournaments';
+import { fetchAllTournaments, fetchTournaments } from '../helpers/server/fetchTournaments';
 import { getGalleryItems } from '../helpers/server/galleryItems';
 import { HeaderData, headerQuery, HomePageData, homepageQuery, MotMData, motmQuery, queryBuilder } from '../helpers/server/cms';
+import type { Tournament } from '../types/Tournament';
 import banner from '../public/banner.webp';
 
 export const revalidate = 43200;
@@ -22,6 +24,28 @@ const fetchHomeData = (): Promise<HomeCmsData> => {
   return homeQuery.fetch();
 };
 
+const isOnOrBeforeDay = (today: Date, deadline: Date): boolean => {
+  const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const deadlineUTC = Date.UTC(deadline.getUTCFullYear(), deadline.getUTCMonth(), deadline.getUTCDate());
+
+  return todayUTC <= deadlineUTC;
+};
+
+const getFeaturedTournament = (
+  tournaments: Tournament[],
+  homepage: HomePageData[ 'homepage' ],
+): Tournament | undefined => {
+  if (!homepage.featuredTournament || !homepage.featuredTournamentDate) {
+    return undefined;
+  }
+
+  if (!isOnOrBeforeDay(new Date(), new Date(homepage.featuredTournamentDate))) {
+    return undefined;
+  }
+
+  return tournaments.find((tournament) => tournament.url === homepage.featuredTournament);
+};
+
 export const generateMetadata = async (): Promise<Metadata> => {
   const cmsData = await fetchHomeData();
 
@@ -35,16 +59,20 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Home() {
-  const [ tournaments, initialGalleryItems, cmsData ] = await Promise.all([
+  const [ tournaments, allTournaments, initialGalleryItems, cmsData ] = await Promise.all([
     fetchTournaments(),
+    fetchAllTournaments(),
     getGalleryItems(4),
     fetchHomeData(),
   ]);
+
+  const featuredTournament = getFeaturedTournament(allTournaments, cmsData.homepage);
 
   return (
     <>
       <Header tournaments={tournaments} cmsData={cmsData} />
       <main>
+        {featuredTournament && <FeaturedTournament tournament={featuredTournament} />}
         <Container size="large">
           <Community initialGalleryItems={initialGalleryItems} cmsData={cmsData} />
         </Container>

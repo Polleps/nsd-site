@@ -1,0 +1,171 @@
+.wrapper {
+  margin-top: var(--size-xl);
+}
+
+.link {
+  display: block;
+  position: relative;
+  border-radius: var(--radii-main);
+  padding: 3px;
+}
+
+/*
+ * The gradient is drawn oversized and its position animated, so the ring and
+ * the halo drift together. The halo also pulses on a shorter, offset cycle to
+ * draw the eye. Keyframes own background-position and opacity; the hover state
+ * only touches filter, so the two never fight over the same property.
+ */
+@keyframes glowDrift {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes glowPulse {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 0.85;
+  }
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-image: var(--color-gradient-main);
+  background-size: 200% 200%;
+  opacity: 0.7;
+  transition: opacity 150ms ease-in-out;
+  animation: glowDrift 6s ease-in-out infinite alternate;
+}
+
+/* Blurred copy of the gradient border, escaping the card edges as a glow. */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  z-index: 0;
+  border-radius: inherit;
+  background-image: var(--color-gradient-main);
+  background-size: 200% 200%;
+  opacity: 0.65;
+  filter: blur(22px);
+  transition: filter 200ms ease-in-out;
+  will-change: filter;
+  animation:
+    glowDrift 6s ease-in-out infinite alternate,
+    glowPulse 3.2s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link::before,
+  .link::after {
+    animation: none;
+  }
+}
+
+.link:hover::before,
+.link:focus-visible::before {
+  opacity: 1;
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  filter: blur(30px) brightness(1.4) saturate(1.15);
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 14rem auto;
+  grid-template-areas: 'image content';
+  gap: var(--size-xl);
+  align-items: center;
+  padding: var(--size-lg) !important;
+  background-color: #000 !important;
+  background-image: none !important;
+  border-radius: calc(var(--radii-main) - 3px) !important;
+  color: var(--color-text-light);
+}
+
+@media (--smDown) {
+  .card {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'image' 'content';
+    padding: var(--size-md) !important;
+  }
+}
+
+.imageWrapper {
+  grid-area: image;
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: var(--radii-main);
+  overflow: hidden;
+  background-color: var(--color-background-gray-transparent-plain);
+}
+
+.image {
+  object-fit: contain;
+  padding: var(--size-md);
+}
+
+.content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+}
+
+.eyebrow {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  opacity: 0.85;
+}
+
+.title {
+  font-size: var(--font-size-color-headings);
+  font-weight: var(--font-weight-bold);
+  text-shadow: var(--shadow-main);
+}
+
+@media (--smDown) {
+  .title {
+    font-size: 1.8rem;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-md);
+  font-size: var(--font-size-large);
+  /* font-weight: var(--font-weight-medium); */
+
+  & time {
+    color: var(--color-link);
+  }
+}
+
+.location {
+  font-style: normal;
+}
+
+.description {
+  font-size: 1.15rem;
+  max-width: 60ch;
+}

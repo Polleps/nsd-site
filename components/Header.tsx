@@ -13,7 +13,7 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ tournaments, cmsData }) => (
   <header className={styles.header}>
-    <Container className={styles.headerContainer} size="large">
+    <Container className={styles.headerContainer} size='large'>
       <div className={styles.headerContent}>
         <div className={styles.textWrapper}>
           <h1>{cmsData.header.pageTitle}</h1>
