@@ -1,7 +1,7 @@
 .nav {
   align-items: center;
   background-color: var(--color-background-dark-transparent-plain);
-  border-bottom: 2px solid var(--color-secondary);
+  /* border-bottom: 2px solid var(--color-secondary-transparent); */
   color: var(--color-text);
   display: flex;
   font-size: var(--font-size-large);

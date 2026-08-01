@@ -7,21 +7,31 @@
   --color-background-gray-transparent-plain: rgba(38, 38, 38, 0.9);
   --color-background-dark-transparent-plain: rgb(10 10 10 / 70%);
   --color-background-dark-transparent-blur: rgb(10 10 10 / 30%);
-  --color-gradient-main: linear-gradient(225deg, rgba(69, 193, 112, 1) 0%, rgba(39, 51, 121, 1) 100%);
+  --color-gradient-main: linear-gradient(
+    225deg,
+    rgba(69, 193, 112, 1) 0%,
+    rgba(39, 51, 121, 1) 100%
+  );
   --color-primary: #0d1334;
   --color-primary-light: #20284a;
   --color-primary-transparent: rgba(4 13 51 / 89%);
-  --color-background-transparent: linear-gradient(rgba(27 62 66 / 0.9), var(--color-primary-transparent));
+  --color-background-transparent: linear-gradient(
+    rgba(27 62 66 / 0.9),
+    var(--color-primary-transparent)
+  );
   --color-text: white;
   --color-text-light: #dfdfdf;
   --color-text-dark: #858585;
   --color-secondary: #42b271;
+  --color-secondary-transparent: rgba(66, 178, 113, 0.323);
   --color-html-theme-color: #18393d;
   --color-link: var(--color-secondary);
 
   /* fonts */
-  --font-main: 'Montserrat', sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --font-main:
+    'Montserrat', sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
 
   /* font sizes */
   --font-size-small: 0.4rem;
