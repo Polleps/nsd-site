@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { Tournament } from '../../types/Tournament';
 import { Card } from '../lib/Card';
+import { LiveStreamLink } from './LiveStreamLink';
 import styles from './TournamentCard.module.css';
 
 export interface TournamentCardProps {
@@ -15,9 +16,18 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 
 export const TournamentCard: React.FC<TournamentCardProps> = ({ tournament }) => (
   <div>
-    <time className={styles.dateWrapper} dateTime={new Date(tournament.startDate).toISOString()}>
-      {new Date(tournament.startDate).toLocaleDateString('nl-NL', dateOptions)}
-    </time>
+    <div className={styles.dateRow}>
+      <time className={styles.dateWrapper} dateTime={new Date(tournament.startDate).toISOString()}>
+        {new Date(tournament.startDate).toLocaleDateString('nl-NL', dateOptions)}
+      </time>
+      {tournament.streamURL && (
+        <LiveStreamLink
+          startDate={tournament.startDate}
+          endDate={tournament.endDate}
+          streamURL={tournament.streamURL}
+        />
+      )}
+    </div>
     <a
       className={styles.link}
       href={`https://www.start.gg/tournament/${tournament.url}`}
