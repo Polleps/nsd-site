@@ -1,11 +1,3 @@
-.dateRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  column-gap: var(--size-md);
-}
-
 .dateWrapper {
   font-weight: var(--font-weight-medium);
   color: rgba(255 255 255 / 57%);
@@ -43,21 +35,51 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  color: inherit;
+  text-decoration: none;
 }
 
-.locationWrapper {
-  grid-area: location;
-  font-style: normal;
-}
-
-.link {
-  display: block;
-  transition: box-shadow 100ms ease-in-out;
+/* Stretches the title link over the whole card. */
+.titleWrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
   border-radius: var(--radii-main);
 }
 
-.link:hover,
-.link:focus {
+.card {
+  position: relative;
+  transition: box-shadow 100ms ease-in-out;
+}
+
+.card:has(.titleWrapper:hover),
+.card:has(.titleWrapper:focus-visible) {
+  box-shadow: var(--shadow-main), 0px 0px 0px 2px var(--color-secondary);
+}
+
+.titleWrapper:focus-visible {
   outline: none;
-  box-shadow: 0px 0px 0px 2px var(--color-secondary);
+}
+
+.locationRow {
+  grid-area: location;
+  display: flex;
+  align-items: center;
+  gap: var(--size-md);
+  min-width: 0;
+}
+
+.locationWrapper {
+  font-style: normal;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Above the stretched card link, so it gets its own clicks. */
+.liveLink {
+  position: relative;
+  z-index: 1;
+  margin-left: auto;
 }

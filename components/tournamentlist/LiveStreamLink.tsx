@@ -39,9 +39,16 @@ export const LiveStreamLink: React.FC<LiveStreamLinkProps> = ({ startDate, endDa
   }
 
   return (
-    <a className={styles.link} href={streamURL} target="_blank" rel="noreferrer">
+    <a
+      className={styles.link}
+      href={streamURL}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Nu live, kijk de stream"
+    >
       <span className={styles.dot} aria-hidden="true" />
-      Nu live · kijk de stream
+      Nu live
+      <span aria-hidden="true">→</span>
     </a>
   );
 };
