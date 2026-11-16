@@ -14,45 +14,49 @@ const dateOptions: Intl.DateTimeFormatOptions = {
   month: 'long',
 };
 
+/**
+ * The whole card links to start.gg through the title link, whose ::after covers the card.
+ * That keeps the live stream link a real, separate link inside the card (links can't nest).
+ */
 export const TournamentCard: React.FC<TournamentCardProps> = ({ tournament }) => (
   <div>
-    <div className={styles.dateRow}>
-      <time className={styles.dateWrapper} dateTime={new Date(tournament.startDate).toISOString()}>
-        {new Date(tournament.startDate).toLocaleDateString('nl-NL', dateOptions)}
-      </time>
-      {tournament.streamURL && (
-        <LiveStreamLink
-          startDate={tournament.startDate}
-          endDate={tournament.endDate}
-          streamURL={tournament.streamURL}
-        />
-      )}
-    </div>
-    <a
-      className={styles.link}
-      href={`https://www.start.gg/tournament/${tournament.url}`}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <Card>
-        <div className={styles.cardContent}>
-          <div className={styles.imageWrapper}>
-            <Image
-              className={styles.tournamentCardImage}
-              height={100}
-              width={100}
-              src={tournament.image ?? ''}
-              alt={`Logo of ${tournament.title}`}
-            />
-          </div>
-          <span className={styles.titleWrapper}>
-            {tournament.title}
-          </span>
+    <time className={styles.dateWrapper} dateTime={new Date(tournament.startDate).toISOString()}>
+      {new Date(tournament.startDate).toLocaleDateString('nl-NL', dateOptions)}
+    </time>
+    <Card className={styles.card}>
+      <div className={styles.cardContent}>
+        <div className={styles.imageWrapper}>
+          <Image
+            className={styles.tournamentCardImage}
+            height={100}
+            width={100}
+            src={tournament.image ?? ''}
+            alt={`Logo of ${tournament.title}`}
+          />
+        </div>
+        <a
+          className={styles.titleWrapper}
+          href={`https://www.start.gg/tournament/${tournament.url}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {tournament.title}
+        </a>
+        <div className={styles.locationRow}>
           <address className={styles.locationWrapper}>
             {tournament.city}
           </address>
+          {tournament.streamURL && (
+            <div className={styles.liveLink}>
+              <LiveStreamLink
+                startDate={tournament.startDate}
+                endDate={tournament.endDate}
+                streamURL={tournament.streamURL}
+              />
+            </div>
+          )}
         </div>
-      </Card>
-    </a>
+      </div>
+    </Card>
   </div>
 );
