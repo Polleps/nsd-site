@@ -7,6 +7,8 @@ export interface LiveStreamLinkProps {
   startDate: number;
   endDate: number;
   streamURL: string;
+  /** Shown instead of the link whenever the tournament isn't live. */
+  children?: React.ReactNode;
 }
 
 const CHECK_INTERVAL_MS = 60_000;
@@ -18,12 +20,13 @@ const subscribeToClock = (onChange: () => void) => {
 };
 
 /**
- * "Nu live" link to a tournament's stream, shown only while the tournament is ongoing.
+ * "Nu live" link to a tournament's stream, shown only while the tournament is ongoing;
+ * otherwise renders its children.
  * The page is ISR-cached for hours, so "ongoing" is decided in the browser against the
  * current time (and re-checked every minute), never at build time. The server render
- * and hydration show nothing.
+ * and hydration show the children.
  */
-export const LiveStreamLink: React.FC<LiveStreamLinkProps> = ({ startDate, endDate, streamURL }) => {
+export const LiveStreamLink: React.FC<LiveStreamLinkProps> = ({ startDate, endDate, streamURL, children }) => {
   const isLive = useSyncExternalStore(
     subscribeToClock,
     () => {
@@ -35,7 +38,7 @@ export const LiveStreamLink: React.FC<LiveStreamLinkProps> = ({ startDate, endDa
   );
 
   if (!isLive) {
-    return null;
+    return children;
   }
 
   return (
