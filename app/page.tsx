@@ -4,7 +4,7 @@ import { Community } from '../components/Home/Community';
 import { FeaturedTournament } from '../components/Home/FeaturedTournament';
 import { Container } from '../components/lib/Container';
 import { Socials } from '../components/Home/Socials';
-import { fetchAllTournaments, fetchTournaments } from '../helpers/server/fetchTournaments';
+import { fetchTournamentByUrl, fetchTournaments } from '../helpers/server/fetchTournaments';
 import { getGalleryItems } from '../helpers/server/galleryItems';
 import { HeaderData, headerQuery, HomePageData, homepageQuery, MotMData, motmQuery, queryBuilder } from '../helpers/server/cms';
 import type { Tournament } from '../types/Tournament';
@@ -31,10 +31,9 @@ const isOnOrBeforeDay = (today: Date, deadline: Date): boolean => {
   return todayUTC <= deadlineUTC;
 };
 
-const getFeaturedTournament = (
-  tournaments: Tournament[],
+const getFeaturedTournament = async (
   homepage: HomePageData[ 'homepage' ],
-): Tournament | undefined => {
+): Promise<Tournament | undefined> => {
   if (!homepage.featuredTournament || !homepage.featuredTournamentDate) {
     return undefined;
   }
@@ -43,7 +42,7 @@ const getFeaturedTournament = (
     return undefined;
   }
 
-  return tournaments.find((tournament) => tournament.url === homepage.featuredTournament);
+  return fetchTournamentByUrl(homepage.featuredTournament);
 };
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -59,14 +58,13 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Home() {
-  const [ tournaments, allTournaments, initialGalleryItems, cmsData ] = await Promise.all([
+  const [ tournaments, initialGalleryItems, cmsData ] = await Promise.all([
     fetchTournaments(),
-    fetchAllTournaments(),
     getGalleryItems(4),
     fetchHomeData(),
   ]);
 
-  const featuredTournament = getFeaturedTournament(allTournaments, cmsData.homepage);
+  const featuredTournament = await getFeaturedTournament(cmsData.homepage);
 
   return (
     <>
