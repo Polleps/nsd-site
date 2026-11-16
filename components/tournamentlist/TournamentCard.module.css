@@ -1,3 +1,11 @@
+.dateRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: var(--size-md);
+}
+
 .dateWrapper {
   font-weight: var(--font-weight-medium);
   color: rgba(255 255 255 / 57%);
